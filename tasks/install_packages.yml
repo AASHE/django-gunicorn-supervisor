@@ -1,0 +1,40 @@
+###
+# updates the APT package cache and install packages necessary for web
+# servers
+#
+---
+
+- name: ensure apt cache is up to date
+  apt: update_cache=yes
+  sudo: yes
+
+- name: ensure web server packages are installed
+  apt: name={{item}} state=latest update_cache=true
+  sudo: yes
+  with_items:
+    - binutils
+    - build-essential
+    - gdal-bin
+    - git
+    - libncurses5-dev
+    - libjpeg-dev
+    - libpq-dev
+    - libproj-dev
+    - libmysqlclient-dev
+    - libmysqlclient18
+    - libxml2-dev
+    - libxslt1-dev
+    - memcached
+    - mercurial
+    - mysql-common
+    - nginx
+    - python-dev
+    - python-mysqldb
+    - python-pip
+    - supervisor
+
+- name: global pip installs
+  pip: name={{item}}
+  with_items:
+    virtualenv
+  sudo: yes

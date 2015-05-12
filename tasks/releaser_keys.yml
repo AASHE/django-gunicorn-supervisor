@@ -1,0 +1,34 @@
+---
+# add the ssh keys for accessing repositories
+
+- name: Ensure that the .ssh directory is created and has the right permissions
+  file: path=/home/{{ app_user }}/.ssh
+    owner={{ app_user }}
+    group={{ app_group }}
+    mode=0700
+    state=directory
+  sudo: yes
+
+- name: create the public ssh key file
+  copy: content="{{ releaser_public_key }}"
+    dest=/home/{{ app_user }}/.ssh/id_rsa.pub
+    owner={{ app_user }}
+    group={{ app_group }}
+    mode=0600
+  sudo: yes
+
+- name: create the private ssh key file
+  copy: content="{{ releaser_private_key }}"
+    dest=/home/{{ app_user }}/.ssh/id_rsa
+    owner={{ app_user }}
+    group={{ app_group }}
+    mode=0600
+  sudo: yes
+
+- name: add known hosts
+  copy: content="{{ known_hosts }}"
+    dest=/home/{{ app_user }}/.ssh/known_hosts
+    owner={{ app_user }}
+    group={{ app_group }}
+    mode=600
+  sudo: yes

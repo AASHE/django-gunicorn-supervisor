@@ -1,0 +1,56 @@
+###
+# Pulls the code from a remote repository or copies a local source directory
+#
+---
+
+- name: checkout latest web app code (git)
+  git:
+    repo={{django_repo}}
+    dest={{app_code_dir}}
+    version={{django_repo_revision}}
+  when: repo_type == 'git'
+  sudo: yes
+  sudo_user: "{{app_user}}"
+  tags: django
+  notify: restart application
+
+- name: checkout latest web app code (hg)
+  hg:
+    repo={{django_repo}}
+    dest={{app_code_dir}}
+    purge=yes
+    revision={{django_repo_revision}}
+  when: repo_type == 'hg'
+  sudo: yes
+  sudo_user: "{{app_user}}"
+  tags: django
+  notify: restart application
+
+# - name: copy src from local machine to vagrant
+#   copy:
+#     src={{django_repo}}
+#     dest={{app_code_dir}}
+#     owner={{app_user}}
+#     group={{app_group}}
+#   when: repo_type == 'local'
+#   tags: django
+
+# only available when running a local vagrant
+
+- name: remove the src folder because we're using a symlink
+  file:
+    path={{app_code_dir}}
+    state=absent
+  when: repo_type == 'local'
+  tags: django
+
+- name: create symlink to local src
+  file:
+    src=/srv/src
+    dest={{app_code_dir}}
+    owner={{app_user}}
+    group={{app_group}}
+    state=link
+  when: repo_type == 'local'
+  tags: django
+  notify: restart application

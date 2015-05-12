@@ -1,0 +1,24 @@
+###
+# Set up newrelic
+#
+---
+
+# - name: install newrelic
+#   pip: name=newrelic
+#   sudo: yes
+#   when: newrelic
+
+- name: install newrelic to the environment
+  pip:
+    name=newrelic
+    virtualenv={{app_env_dir}}
+  sudo: yes
+  when: newrelic
+
+- name: update newrelic ini file
+  template:
+    src=newrelic.ini.j2
+    dest={{newrelic_ini_path}}
+  sudo: yes
+  sudo_user: "{{app_user}}"
+  when: newrelic

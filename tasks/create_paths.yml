@@ -1,0 +1,35 @@
+###
+# Create all the directories for this app
+#
+---
+
+- name: Ensure that all paths are created and have the right permissions
+  file:
+    path={{item}}
+    recurse=yes
+    owner={{ app_user }}
+    group={{ app_group }}
+    state=directory
+    mode=0775
+  with_items:
+    - "{{base_dir}}"
+    - "{{app_base_dir}}"
+    - "{{app_media_dir}}"
+    - "{{app_static_dir}}"
+    - "{{app_log_dir}}"
+  sudo: yes
+  tags:
+    - paths
+
+- name: Create the src directory when not using a local src repo
+  file:
+    path={{app_code_dir}}
+    recurse=yes
+    owner={{ app_user }}
+    group={{ app_group }}
+    state=directory
+    mode=0775
+  sudo: yes
+  when: repo_type != 'local'
+  tags:
+    - paths
