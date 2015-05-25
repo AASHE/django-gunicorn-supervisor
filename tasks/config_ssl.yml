@@ -2,29 +2,29 @@
 # Configuration for SSL certificates
 ---
 
-- include_vars: ssl.yml
-  when: ssl
+# the ssl.yml file should be set at the project level for all appservers
+#- include_vars: ssl.yml
+#  when: use_ssl
 
 - name: create SSL directory
-  when: ssl
   file: path=/etc/nginx/ssl/
     recurse=yes
     owner={{ app_user }}
     group={{ app_group }}
     state=directory
     mode=0775
+  when: use_ssl
 
 - name: create SSL crt file
-  when: ssl
   copy: content="{{ ssl_crt }}"
     dest=/etc/nginx/ssl/{{domain_name}}.crt
     owner={{ app_user }}
     group={{ app_group }}
     mode=0664
   sudo: yes
+  when: use_ssl
 
 - name: create SSL key file
-  when: ssl
   copy: content="{{ ssl_key }}"
     dest=/etc/nginx/ssl/{{domain_name}}.key
     owner={{ app_user }}
@@ -33,3 +33,4 @@
   sudo: yes
   notify:
     - restart nginx
+  when: use_ssl

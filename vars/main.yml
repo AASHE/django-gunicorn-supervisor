@@ -21,6 +21,7 @@ django_settings: "{{ django_settings_path }}"
 
 # Nginx settings
 nginx_http_port: 80
+nginx_https_port: 443
 nginx_access_log_file: "{{ app_log_dir }}/nginx_access.log"
 nginx_error_log_file: "{{ app_log_dir }}/nginx_error.log"
 ssl: false
