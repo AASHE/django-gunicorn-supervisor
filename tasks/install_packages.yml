@@ -14,24 +14,34 @@
   with_items:
     - binutils
     - build-essential
-    - gdal-bin
     - git
     - libncurses5-dev
     - libjpeg-dev
-    - libpq-dev
-    - libproj-dev
-    - libmysqlclient-dev
-    - libmysqlclient18
-    - libxml2-dev
-    - libxslt1-dev
     - memcached
     - mercurial
-    - mysql-common
     - nginx
     - python-dev
-    - python-mysqldb
     - python-pip
     - supervisor
+    # - gdal-bin
+    # - libproj-dev
+
+- name: install app-specific packages
+  apt: name={{item}} state=latest update_cache=true
+  sudo: yes
+  with_items: base_app_apt_packages
+
+- name: install dev packages
+  apt: name={{item}} state=latest update_cache=true
+  sudo: yes
+  with_items: dev_app_apt_packages
+  when: install_dev_packages
+
+- name: install test packages
+  apt: name={{item}} state=latest update_cache=true
+  sudo: yes
+  with_items: test_app_apt_packages
+  when: install_test_packages
 
 - name: global pip installs
   pip: name={{item}}

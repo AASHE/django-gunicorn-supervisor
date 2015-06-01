@@ -1,0 +1,53 @@
+###
+# Creates a virtualenv and installs requirements
+#
+---
+
+- name: check if virtualenv already exists
+  stat: path={{app_env_dir}}
+  register: venv_dir
+  tags: django
+
+- name: Ensure that all paths are created and have the right permissions
+  file: path={{global_env_dir}}
+    recurse=yes
+    owner={{ app_user }}
+    group={{ app_group }}
+    state=directory
+
+- name: create virtualenv for django web application
+  shell: virtualenv {{app_env_dir}}
+  when: venv_dir.stat.isdir is not defined
+  sudo: yes
+  sudo_user: "{{app_user}}"
+  tags: django
+
+- name: add the postactivate script
+  template:
+    src=postactivate.j2
+    dest={{app_env_dir}}/bin/postactivate
+    owner={{ app_user }}
+    group={{ app_group }}
+    mode=0775
+  sudo: yes
+  tags: django
+
+- name: run pip with default response of "(w)wipe" for required repos
+  shell: yes w | {{app_env_dir}}/bin/pip install -r {{requirements_txt_path}}
+  sudo: yes
+  sudo_user: "{{app_user}}"
+  tags: django
+
+- name: install dev requirements
+  shell: yes w | {{app_env_dir}}/bin/pip install -r "{{ app_code_dir }}/{{dev_app_pip_path}}"
+  sudo: yes
+  sudo_user: "{{app_user}}"
+  tags: django
+  when: install_dev_packages
+
+- name: install dev requirements
+  shell: yes w | {{app_env_dir}}/bin/pip install -r "{{ app_code_dir }}/{{test_app_pip_path}}"
+  sudo: yes
+  sudo_user: "{{app_user}}"
+  tags: django
+  when: install_test_packages

@@ -14,6 +14,12 @@ supervisor.
 `ssl_key` - the key (should be stored in a vault)
 `domain_name` - like www.aashe.org
 
+`install_dev_packages` - flag to indicate that dev packages should be installed
+`install_test_packages` - flag to indicate that test packages should be installed
+`base_app_apt_packages` - the base apt-get packages for this app
+`dev_app_apt_packages` - the base apt-get packages for this app
+`test_app_apt_packages` - the test apt-get packages for this app
+
 `gunicorn_workers` - the number of gunicorn workers (default is 1)
 
 `newrelic` - boolean: should we use new relic?
