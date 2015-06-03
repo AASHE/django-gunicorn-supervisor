@@ -9,7 +9,7 @@
   sudo: yes
 
 - name: ensure web server packages are installed
-  apt: name={{item}} state=latest update_cache=true
+  apt: name={{item}} state=latest
   sudo: yes
   with_items:
     - binutils
@@ -27,18 +27,18 @@
     # - libproj-dev
 
 - name: install app-specific packages
-  apt: name={{item}} state=latest update_cache=true
+  apt: name={{item}} state=latest
   sudo: yes
   with_items: base_app_apt_packages
 
 - name: install dev packages
-  apt: name={{item}} state=latest update_cache=true
+  apt: name={{item}} state=latest
   sudo: yes
   with_items: dev_app_apt_packages
   when: install_dev_packages
 
 - name: install test packages
-  apt: name={{item}} state=latest update_cache=true
+  apt: name={{item}} state=latest
   sudo: yes
   with_items: test_app_apt_packages
   when: install_test_packages

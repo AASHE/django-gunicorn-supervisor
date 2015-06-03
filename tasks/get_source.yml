@@ -8,6 +8,7 @@
     repo={{django_repo}}
     dest={{app_code_dir}}
     version={{django_repo_revision}}
+    force=true
   when: repo_type == 'git'
   sudo: yes
   sudo_user: "{{app_user}}"
