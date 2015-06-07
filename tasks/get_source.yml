@@ -27,15 +27,6 @@
   tags: django
   notify: restart application
 
-# - name: copy src from local machine to vagrant
-#   copy:
-#     src={{django_repo}}
-#     dest={{app_code_dir}}
-#     owner={{app_user}}
-#     group={{app_group}}
-#   when: repo_type == 'local'
-#   tags: django
-
 # only available when running a local vagrant
 
 - name: remove the src folder because we're using a symlink

@@ -2,19 +2,19 @@
 # Configuration for Nginx web server
 ---
 
-- name: write nginx configuration without SSL
+- name: "write nginx configuration without SSL"
   template: src=nginx.conf.j2 dest=/etc/nginx/sites-enabled/{{app_name}}.conf
   sudo: yes
-  when: not use_ssl
+  when: not nginx_use_ssl
   notify:
     - restart nginx
   tags:
     - nginx
 
-- name: write nginx configuration with SSL
+- name: "write nginx configuration with SSL"
   template: src=nginx.ssl.conf.j2 dest=/etc/nginx/sites-enabled/{{app_name}}.conf
   sudo: yes
-  when: use_ssl
+  when: nginx_use_ssl
   notify:
     - restart nginx
   tags:

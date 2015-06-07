@@ -12,16 +12,16 @@
   sudo: yes
   sudo_user: "{{app_name}}"
   tags: django
-
-- name: run the django migrate command
-  django_manage: app_path={{app_code_dir}}
-    command="migrate"
-    virtualenv={{app_env_dir}}
-    settings={{django_settings}}
-  environment: app_env_vars
-  sudo: yes
-  sudo_user: "{{app_name}}"
-  tags: django
+#
+# - name: run the django migrate command
+#   django_manage: app_path={{app_code_dir}}
+#     command="migrate"
+#     virtualenv={{app_env_dir}}
+#     settings={{django_settings}}
+#   environment: app_env_vars
+#   sudo: yes
+#   sudo_user: "{{app_name}}"
+#   tags: django
 
 - name: run the django collectstatic command
   django_manage: app_path={{app_code_dir}}
@@ -37,7 +37,7 @@
 
 - name: run tests
   django_manage: app_path={{app_code_dir}}
-    command="test registration"
+    command="test institutions.SubscriptionTest.test_pay_creates_payment_with_good_credit_card_info"
     virtualenv={{app_env_dir}}
     settings={{django_settings}}
   environment: app_env_vars

@@ -1,5 +1,18 @@
 [program:{{app_name}}]
-environment={% for k, v in app_env_vars.iteritems() %}{% if not loop.first %},{% endif %}{{ k }}="{{ v }}"{% endfor %}{% if newrelic %},NEW_RELIC_CONFIG_FILE="{{newrelic_ini_path}}"{% endif %}{% if debug%},DEBUG=1{% endif %}
+
+environment =
+{% for k, v in app_env_vars.iteritems() %}
+  {{ k }}="{{v}}",
+{% endfor %}
+{% for k, v in additional_env_vars.iteritems() %}
+  {{ k }}="{{v}}",
+{% endfor %}
+{% if newrelic %}
+  NEW_RELIC_CONFIG_FILE="{{newrelic_ini_path}}",
+{% endif %}
+{% if django_debug %}
+  DEBUG=1
+{% endif %}
 
 command={{app_env_dir}}/bin/gunicorn {{app_name}}.wsgi:application -w {{gunicorn_workers}} --log-file {{app_log_dir}}/gunicorn.log
 directory={{app_code_dir}}

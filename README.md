@@ -5,6 +5,10 @@ supervisor.
 
 ## Variables
 
+### Required
+
+`nginx_use_ssl` - config with ssl or not
+
 `repo_type` - either 'hg' or 'git' @todo - add 'local'
 `django_repo` - the path to the repo or the local source if `repo_type` = local
 `app_name` - the name of the app

@@ -13,7 +13,7 @@
     group={{ app_group }}
     state=directory
     mode=0775
-  when: use_ssl
+  when: nginx_use_ssl
 
 - name: create SSL crt file
   copy: content="{{ ssl_crt }}"
@@ -22,7 +22,7 @@
     group={{ app_group }}
     mode=0664
   sudo: yes
-  when: use_ssl
+  when: nginx_use_ssl
 
 - name: create SSL key file
   copy: content="{{ ssl_key }}"
@@ -33,4 +33,4 @@
   sudo: yes
   notify:
     - restart nginx
-  when: use_ssl
+  when: nginx_use_ssl
