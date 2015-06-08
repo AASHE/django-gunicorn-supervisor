@@ -32,6 +32,17 @@
   sudo: yes
   tags: django
 
+- name: install server specific requirements
+  shell: yes w | {{app_env_dir}}/bin/pip install {{item}}
+  with_items:
+    - pip==1.5.4
+    - ndg-httpsclient
+    - pyasn1
+    - pyopenssl
+  sudo: yes
+  sudo_user: "{{app_user}}"
+  tags: django
+
 - name: run pip with default response of "(w)wipe" for required repos
   shell: yes w | {{app_env_dir}}/bin/pip install -r {{requirements_txt_path}}
   sudo: yes
