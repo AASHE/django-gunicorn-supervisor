@@ -1,0 +1,24 @@
+gzip             on;
+gzip_min_length  1000;
+gzip_proxied     expired no-cache no-store private auth;
+gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+access_log {{app_log_dir}}/nginx.access.log;
+error_log {{app_log_dir}}/nginx.error.log info;
+
+keepalive_timeout 70;
+client_max_body_size 15M;
+
+# nginx should serve up static files and never send to the WSGI server
+location /static {
+  alias {{app_static_dir}};
+  expires 40m;
+  access_log off;
+  add_header Cache-Control "public";
+}
+location /media {
+  alias {{app_media_dir}};
+  expires 40m;
+  access_log off;
+  add_header Cache-Control "public";
+}

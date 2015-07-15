@@ -15,35 +15,9 @@ server {
 
   ssl                  off;
 
-  access_log {{app_log_dir}}/nginx.access.log;
-  error_log {{app_log_dir}}/nginx.error.log info;
-
-  keepalive_timeout 5;
-  gzip             on;
-  gzip_min_length  1000;
-  gzip_proxied     expired no-cache no-store private auth;
-  gzip_types       text/plain application/xml;
-  client_max_body_size 15M;
-
-  # nginx should serve up static files and never send to the WSGI server
-  location /static {
-    alias {{app_static_dir}};
-  }
-  location /media {
-    alias {{app_media_dir}};
-  }
+  {% include 'nginx.common.j2' %}
 
   location / {
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header Host $http_host;
-    proxy_redirect off;
-    proxy_buffers 8 16k;
-    proxy_buffer_size 32k;
-    proxy_read_timeout 180s;
-
-    if (!-f $request_filename) {
-      proxy_pass http://app_server_djangoapp;
-      break;
-    }
+      {% include 'nginx.proxy.j2' %}
   }
 }
