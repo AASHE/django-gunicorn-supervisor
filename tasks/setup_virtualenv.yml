@@ -44,7 +44,7 @@
   tags: django
 
 - name: run pip with default response of "(w)wipe" for required repos
-  shell: yes w | {{app_env_dir}}/bin/pip install -r {{requirements_txt_path}}
+  shell: yes w | {{app_env_dir}}/bin/pip install -r {{requirements_txt_path}} --process-dependency-links
   sudo: yes
   sudo_user: "{{app_user}}"
   tags: django
