@@ -24,8 +24,6 @@ supervisor.
 `dev_app_apt_packages` - the base apt-get packages for this app
 `test_app_apt_packages` - the test apt-get packages for this app
 
-`gunicorn_workers` - the number of gunicorn workers (default is 1)
-
 `newrelic` - boolean: should we use new relic?
 `newrelic_license_key` - the new relic license key (required if using new relic)
 `new_relic_log_level` - default is "info"
