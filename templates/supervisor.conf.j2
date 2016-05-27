@@ -1,6 +1,9 @@
 [program:{{app_name}}]
 
 environment =
+  LANG="en_US.utf8"
+  LC_ALL="en_US.UTF-8"
+  LC_LANG="en_US.UTF-8"
 {% for k, v in app_env_vars.iteritems() %}
   {{ k }}="{{v}}",
 {% endfor %}
@@ -14,7 +17,6 @@ environment =
   DEBUG=1
 {% endif %}
 
-environment=LANG="en_US.utf8", LC_ALL="en_US.UTF-8", LC_LANG="en_US.UTF-8"
 directory={{app_code_dir}}
 user={{app_user}}
 autostart=true
