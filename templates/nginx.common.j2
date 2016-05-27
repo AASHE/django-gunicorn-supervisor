@@ -7,7 +7,7 @@ access_log {{app_log_dir}}/nginx.access.log;
 error_log {{app_log_dir}}/nginx.error.log info;
 
 keepalive_timeout 70;
-client_max_body_size 15M;
+client_max_body_size 30M;
 
 # nginx should serve up static files and never send to the WSGI server
 location /static {
