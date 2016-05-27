@@ -14,7 +14,7 @@ environment =
   DEBUG=1
 {% endif %}
 
-command={{app_env_dir}}/bin/gunicorn {{app_name}}.wsgi:application -w {{gunicorn_workers}} --timeout 180 --log-file {{app_log_dir}}/gunicorn.log
+environment=LANG="en_US.utf8", LC_ALL="en_US.UTF-8", LC_LANG="en_US.UTF-8"
 directory={{app_code_dir}}
 user={{app_user}}
 autostart=true
