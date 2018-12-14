@@ -5,5 +5,5 @@ export {{ k }}="{{v}}"
 {% for k,v in additional_env_vars.iteritems() %}
 export {{ k }}="{{v}}"
 {% endfor %}
-{% if newrelic %}NEW_RELIC_CONFIG_FILE="{{newrelic_ini_path}}"{% endif %}
+{% if newrelic %}export NEW_RELIC_CONFIG_FILE="{{newrelic_ini_path}}"{% endif %}
 {% if django_debug %}DEBUG="1"{% endif %}
