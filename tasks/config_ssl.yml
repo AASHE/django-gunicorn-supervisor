@@ -14,6 +14,8 @@
     state=directory
     mode=0775
   when: nginx_use_ssl
+  tags:
+    - ssl
 
 - name: create SSL crt file
   copy: content="{{ ssl_crt }}"
@@ -23,6 +25,8 @@
     mode=0664
   sudo: yes
   when: nginx_use_ssl
+  tags:
+    - ssl
 
 - name: create SSL key file
   copy: content="{{ ssl_key }}"
@@ -34,3 +38,5 @@
   notify:
     - restart nginx
   when: nginx_use_ssl
+  tags:
+    - ssl
