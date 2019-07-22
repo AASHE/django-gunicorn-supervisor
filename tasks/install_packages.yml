@@ -22,7 +22,7 @@
     - nginx
     - python-dev
     - python-pip
-    # - supervisor
+    - supervisor
     # - gdal-bin
     # - libproj-dev
 
