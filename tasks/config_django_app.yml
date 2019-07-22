@@ -3,15 +3,15 @@
 #
 ---
 
-# - name: run the django syncdb command
-  # django_manage: app_path={{app_code_dir}}
-    # command="syncdb"
-    # virtualenv={{app_env_dir}}
-    # settings={{django_settings}}
-  # environment: app_env_vars
-  # sudo: yes
-  # sudo_user: "{{app_name}}"
-  # tags: django
+- name: fake the djcelery migration
+  django_manage: app_path={{app_code_dir}}
+    command="migrate --fake djcelery --noinput"
+    virtualenv={{app_env_dir}}
+    settings={{django_settings}}
+  environment: app_env_vars
+  sudo: yes
+  sudo_user: "{{app_name}}"
+  tags: django
 
 - name: run the django migrate command
   django_manage: app_path={{app_code_dir}}
